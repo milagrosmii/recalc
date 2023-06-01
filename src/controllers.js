@@ -25,6 +25,13 @@ router.get("/pow/:a", async function (req, res) {
     const a = Number(params.a);
 
     if (isNaN(a)) {
+        await createHistoryEntry({
+            firstArg: 0,
+            secondArg: null,
+            operationName: "POW",
+            result: null,
+            error: "El parámetro ingresado no es un numero"
+        })
         res.status(400).send({ mensaje: 'El parámetro ingresado no es un numero'});
     } else {
         const result = core.pow(a);
