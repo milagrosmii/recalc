@@ -134,4 +134,24 @@ describe("History", () => {
         }
         
     })
+
+    test("Debería poder crear una división en el history", async() => {
+      await createHistoryEntry({
+        firstArg: 27,
+        secondArg: 3,
+        result: 9,
+        operationName: "DIV"
+      })
+
+      const entries = await History.findAll({
+        include: [Operation]
+      })
+
+      expect(entries.length).toEqual(1)
+      expect(entries[0].firstArg).toEqual(27)
+      expect(entries[0].secondArg).toEqual(3)
+      expect(entries[0].result).toEqual(9)
+      expect(entries[0].Operation.name).toBeDefined()
+
+    })
 })

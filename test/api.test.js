@@ -52,13 +52,25 @@ describe("API multiply", () => {
     test("Deberia responder con un 200 ok", async () => {
         const app = await api.build()
 
-        request(app).get('/api/v1/mul/2.5/5.5')
+        return request(app).get('/api/v1/mul/2.5/5.5')
             .expect(200)
             .expect('Content-Type', "application/json; charset=utf-8")
-            .end((err, res) => {
-                if (err) throw err
-
+            .then((res) => {
                 expect(res.body.result).toEqual(13.75);
+            })
+    })
+})
+
+describe("API division", () => {
+    test("Deberia responder con un 400 y un error", async () => {
+        const app = await api.build()
+
+
+        return request(app).get('/api/v1/div/2/0')
+            .expect(400)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((res) => {
+                expect(res.body.mensaje).toEqual('No se puede dividir por 0');
             })
     })
 })
