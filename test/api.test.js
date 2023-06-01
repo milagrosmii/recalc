@@ -20,3 +20,17 @@ describe("API substract", () => {
             })
     })
 })
+
+describe("API Pow", () => {
+    test("Deberia responder con codigo 400 y un mensaje de error.", async () => {
+        const app = await api.build()
+
+        return request(app)
+                .get('/api/v1/pow/a')
+                .expect(400)
+                .expect('Content-Type', "application/json; charset=utf-8")
+                .then((res) => {
+                    expect(res.body.mensaje).toEqual("El parámetro ingresado no es un numero");
+                })
+    })
+})
