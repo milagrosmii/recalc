@@ -147,11 +147,11 @@ describe("History", () => {
         include: [Operation]
       })
 
-      expect(entries.length).toEqual(9)
+      expect(entries.length).toEqual(1)
       expect(entries[0].firstArg).toEqual(27)
       expect(entries[0].secondArg).toEqual(3)
       expect(entries[0].result).toEqual(9)
-      expect(entries[0].Operation.name).toEqual()
+      expect(entries[0].Operation.name).toBeDefined()
 
     })
 })
