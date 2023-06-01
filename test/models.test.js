@@ -2,9 +2,11 @@ const { seed } = require('../src/seed.js')
 const {
     createHistoryEntry,
     History,
-    eraseHistory,
-    Operation
+    Operation,
+    getHistory,
+    eraseHistory
 } = require('../src/models.js')
+const { json } = require('body-parser')
 
 beforeEach(async () => {
     await seed()
@@ -79,5 +81,57 @@ describe("History", () => {
         const histories = await History.findAll({})
 
         expect(histories.length).toEqual(0)
+    })
+
+    test("Debería traer el historial desde la DB", async () => {
+        //Primero creo entradas en la base de datos
+
+        const entries = [
+            {
+              firstArg: 45,
+              secondArg: 14,
+              operationName: 'ADD',
+              result: 59
+            },
+            {
+              firstArg: 9,
+              secondArg: 3,
+              operationName: 'DIV',
+              result: 3
+            },
+            {
+              firstArg: 7,
+              secondArg: 2,
+              operationName: 'MUL',
+              result: 14
+            }
+          ];
+      
+          // Crear las entradas de prueba en la base de datos
+          for(let i = 0; i < entries.length; i++)
+          {
+            await createHistoryEntry(entries[i])
+          }
+
+        //Obtengo el historial
+        const dbHistory = await getHistory()
+
+        //compruebo que el historial me devuelva un objeto
+        expect(dbHistory).toEqual(expect.any(Object))
+
+        //compruebo que devuelva al menos un objeto        
+        expect(dbHistory.length).toBeGreaterThan(0)
+
+        //compruebo que el objeto esté definido
+        for (let i = 0; i < dbHistory.length; i++) {
+            const element = dbHistory[i];
+
+            expect(element.firstArg).toBeDefined()
+            expect(element.secondArg).toBeDefined()
+            expect(element.result).toBeDefined()
+            expect(element.Operation.name).toBeDefined()
+            
+        }
+        
     })
 })
