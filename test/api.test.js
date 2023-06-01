@@ -62,3 +62,18 @@ describe("API multiply", () => {
             })
     })
 })
+
+describe("API division", () => {
+    test("Deberia responder con un 400 y un error", async () => {
+        const app = await api.build()
+
+        request(app).get('/api/v1/div/2/0')
+            .expect(400)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .end((err, res) => {
+                if (err) throw err
+
+                expect(res.body.result).toEqual(13.75);
+            })
+    })
+})
