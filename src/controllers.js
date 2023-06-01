@@ -2,6 +2,7 @@ import express from 'express';
 import core from './core.js';
 
 import { createHistoryEntry } from './models.js'
+import { getHistory } from './models.js';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/sub/:a/:b", async function (req, res) {
     } else {
         const result = core.sub(a, b);
 
-        await createHistoryEntry({ firstArg: a, operationName: "ADD" })
+        await createHistoryEntry({ firstArg: a, secondArg: b, operationName: "SUB", result })
         return res.send({ result });
     }
 });
@@ -25,9 +26,22 @@ router.get("/pow/:a", async function (req, res) {
     const a = Number(params.a);
 
     if (isNaN(a)) {
-        res.status(400).send('El parámetro ingresado no es correcto');
+        await createHistoryEntry({
+            firstArg: 0,
+            secondArg: null,
+            operationName: "POW",
+            result: null,
+            error: "El parámetro ingresado no es un numero"
+        })
+        res.status(400).send({ mensaje: 'El parámetro ingresado no es un numero'});
     } else {
         const result = core.pow(a);
+        await createHistoryEntry({
+            firstArg: a,
+            secondArg: null,
+            operationName: "POW",
+            result
+        })
         return res.send({ result });
     }
 });
@@ -78,6 +92,17 @@ router.get("/mul/:a/:b", async function (req, res) {
         return res.send({ result });
     }
 });
+
+router.get("/history", async function(req, res) {
+    try {
+      const history = await getHistory();
+  
+      res.status(200).json(history);
+    } catch (error) {
+      res.status(500).json({ error: "Ocurrió un error al intentar acceder al historial" });
+    }
+  });
+  
 
 export default router;
 
