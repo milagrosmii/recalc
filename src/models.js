@@ -5,7 +5,7 @@ const inTest = process.env.NODE_ENV === 'test';
 const sequelize = new Sequelize({
     dialect: 'sqlite',
     logging: !inTest,
-    storage: inTest ? ':memory:' : './db.sqlite3'
+    storage: inTest ? './db.sqlite3' : './db.sqlite3'
 })
 
 export const History = sequelize.define('History', {
@@ -44,6 +44,7 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
         }
     });
 
+<<<<<<< HEAD
     if(error){
         return History.create({
             firstArg: firstArg,
@@ -58,6 +59,14 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
             OperationId: operation.id,
         })
     }
+=======
+    return History.create({
+        firstArg,
+        secondArg,
+        result,
+        OperationId: operation.id
+    })
+>>>>>>> main
 }
 
 export function createTables() {
