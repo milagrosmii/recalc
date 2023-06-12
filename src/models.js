@@ -76,6 +76,20 @@ export function createTables() {
     ]);
 }
 
+export function getHistory() {
+    return new Promise((resolve, reject) => {
+  
+      History.findAll({
+        include: [Operation]
+      })
+        .then(rows => {
+          resolve(rows);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
 export async function eraseHistory({}){
     await History.destroy({
         truncate: true
