@@ -44,7 +44,6 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
         }
     });
 
-<<<<<<< HEAD
     if(error){
         return History.create({
             firstArg: firstArg,
@@ -59,14 +58,6 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
             OperationId: operation.id,
         })
     }
-=======
-    return History.create({
-        firstArg,
-        secondArg,
-        result,
-        OperationId: operation.id
-    })
->>>>>>> main
 }
 
 export function createTables() {
