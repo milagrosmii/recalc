@@ -52,7 +52,13 @@ router.get("/add/:a/:b", async function (req, res) {
     const b = Number(params.b);
 
     if (isNaN(a) || isNaN(b)) {
-        res.status(400).send('Uno de los parámetros no es un número');
+        res.status(400).send({ mensaje: 'Uno de los parámetros no es un número'});
+        await createHistoryEntry({
+            firstArg: 0,
+            secondArg: 0,
+            operationName: 'ADD',
+            error: 'Uno de los parametros no es un numero'
+        })
     } else {
         const result = core.add(a, b);
         await createHistoryEntry({
