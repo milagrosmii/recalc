@@ -21,6 +21,7 @@ $buttons.addEventListener('click', async (e) => {
             result = await calculateSub(firstArg, secondArg)
         } else if (operation === '^2'){
             result = await calculatePow(firstArg)
+            result > 100000 ? result = "Error: Valor muy grande" : ""
         }
 
         reset = true;
