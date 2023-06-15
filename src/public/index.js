@@ -13,7 +13,6 @@ $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
 
     if (nextAction === "=") {
-        console.log("Operation " + operation)
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
         let result;
