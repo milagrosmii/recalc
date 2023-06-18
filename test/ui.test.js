@@ -115,4 +115,14 @@ test.describe('test', () => {
     expect(historyEntry.firstArg).toEqual(1000)
     expect(historyEntry.result).toEqual(1000000)
   });
+  //Deberia borrar el contenido del display al pulsar el boton C
+  test('Deberia limpiar el display al pulsar el boton C', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '7' }).click();
+    expect(page.getByTestId('display')).toHaveValue(/7/);
+
+    await page.getByRole('button', { name: 'c' }).click(); 
+    await expect(page.getByTestId('display')).toHaveValue('');
+  });
 })

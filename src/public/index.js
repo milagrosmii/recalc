@@ -12,6 +12,8 @@ let unused;
 $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
 
+    nextAction === "c" ? reset = true : ""
+
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -35,7 +37,7 @@ $buttons.addEventListener('click', async (e) => {
     if (reset) {
         reset = false;
         operation = null;
-        renderDisplay(nextAction);
+        renderDisplay("");
     } else {
         renderDisplay(currentDisplay + nextAction);
     }
