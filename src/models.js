@@ -50,14 +50,15 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
             OperationId: operation.id,
             error: error,
         })
-    } else {
-        return History.create({
-            firstArg,
-            secondArg,
-            result,
-            OperationId: operation.id,
-        })
     }
+    
+    return History.create({
+        firstArg,
+        secondArg,
+        result,
+        OperationId: operation.id,
+    })
+
 }
 
 export function createTables() {
