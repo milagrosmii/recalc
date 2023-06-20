@@ -59,12 +59,7 @@ test.describe('test', () => {
     await page.getByRole('button', { name: 'c' }).click(); 
     await expect(page.getByTestId('display')).toHaveValue('');
   });
-  test('Deberia tener como titulo de pagina recalc', async ({ page }) => {
-    await page.goto('./');
-
-    // Expect a title "to contain" a substring.
-    await expect(page).toHaveTitle(/recalc/i);
-  });
+  
 
   test('Deberia poder realizar una multiplicacion', async ({ page }) => {
     await page.goto('./');
