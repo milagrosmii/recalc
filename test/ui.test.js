@@ -198,7 +198,7 @@ test.describe('test', () => {
   test('Deberia poder realizar una suma', async ({ page }) => {
     await page.goto('./');
 
-    await page.getByRole('button', { name: '2' }).click()
+    await page.getByRole('button', { name: '2', exact: true }).click()
     await page.getByRole('button', { name: '4' }).click()
     await page.getByRole('button', { name: '+' }).click()
     await page.getByRole('button', { name: '1' }).click()
