@@ -1,7 +1,7 @@
 const $display = document.querySelector('.display')
 const $buttons = document.querySelector('.buttons')
 
-const operations = ['-','+'];
+const operations = ['-','^2','*','/','+'];
 
 let currentDisplay = "";
 let operation = null;
@@ -12,6 +12,8 @@ let unused;
 $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
 
+    nextAction === "c" ? reset = true : ""
+
     if (nextAction === "=") {
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
@@ -19,10 +21,18 @@ $buttons.addEventListener('click', async (e) => {
 
         if (operation === "-") {
             result = await calculateSub(firstArg, secondArg)
+        } else if (operation === "/") {
+            result = await calculateDiv(firstArg,secondArg)
+            
+        } else if (operation === '^2'){
+            result = await calculatePow(firstArg)
+            result > 100000 ? result = "Error: Valor muy grande" : ""
+        }
+        if (operation === "*") {
+            result = await calculateMul(firstArg, secondArg)
         } else if(operation === "+"){
             result = await calculateAdd(firstArg, secondArg)
         }
-
         reset = true;
         return renderDisplay(result);
     }
@@ -34,7 +44,7 @@ $buttons.addEventListener('click', async (e) => {
     if (reset) {
         reset = false;
         operation = null;
-        renderDisplay(nextAction);
+        renderDisplay("");
     } else {
         renderDisplay(currentDisplay + nextAction);
     }
@@ -46,6 +56,32 @@ async function calculateSub(firstArg, secondArg) {
 
     return result;
 }
+async function calculateMul(firstArg, secondArg) {
+    const resp = await fetch(`/api/v1/mul/${firstArg}/${secondArg}`)
+    const { result } = await resp.json();
+
+    return result;
+}
+
+async function calculatePow(firstArg) {
+    const resp = await fetch(`/api/v1/pow/${firstArg}`)
+    const { result } = await resp.json();
+
+    return result;
+}
+
+async function calculateDiv(firstArg, secondArg) {
+    const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`)
+    if (secondArg == 0) {
+        result = "Math Error"
+        return result;
+    } else {
+        const { result } = await resp.json();
+        return result;
+    }
+    
+}
+
 
 async function calculateAdd(firstArg, secondArg) {
     const resp = await fetch(`/api/v1/add/${firstArg}/${secondArg}`)
@@ -53,6 +89,7 @@ async function calculateAdd(firstArg, secondArg) {
 
     return result;
 }
+
 
 function renderDisplay(chars) {
     currentDisplay = chars;

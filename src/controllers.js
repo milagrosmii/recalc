@@ -106,9 +106,24 @@ router.get("/mul/:a/:b", async function (req, res) {
     const b = Number(params.b);
 
     if (isNaN(a) || isNaN(b)) {
+        await createHistoryEntry({
+            firstArg: a,
+            secondArg: b,
+            operationName: "MUL",
+            result: null,
+            error: "ambos parametros deben ser un numero"
+        })
         res.status(400).send('Uno de los parámetros no es un número');
     } else {
         const result = core.mul(a, b);
+        await createHistoryEntry({
+            firstArg: a,
+            secondArg: b,
+            operationName: "MUL",
+            result
+            
+        })
+        
         return res.send({ result });
     }
 });
