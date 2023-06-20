@@ -54,12 +54,14 @@ async function calculateDiv(firstArg, secondArg) {
     const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`)
     if (secondArg == 0) {
         result = "Math Error"
+        return result;
     } else {
         const { result } = await resp.json();
+        return result;
     }
 
     
-    return result;
+    
 }
 
 function renderDisplay(chars) {
