@@ -82,7 +82,7 @@ export function getHistory() {
         });
     });
   }
-export async function eraseHistory({}){
+export async function eraseHistory(){
     await History.destroy({
         truncate: true
     })
