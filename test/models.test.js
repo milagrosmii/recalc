@@ -77,7 +77,7 @@ describe("History", () => {
             operationName: "SUB"
         })
 
-        await eraseHistory({})
+        await eraseHistory()
 
         const histories = await History.findAll({})
 
@@ -141,7 +141,7 @@ describe("History", () => {
         firstArg: 27,
         secondArg: 3,
         result: 9,
-        operationName: "DIV"
+        operationName: "DIV",
       })
 
       const entries = await History.findAll({
