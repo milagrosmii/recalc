@@ -70,14 +70,12 @@ async function calculatePow(firstArg) {
 }
 
 async function calculateDiv(firstArg, secondArg) {
-    const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`)
-    if (secondArg == 0) {
-        result = "Math Error"
-        return result;
-    } else {
-        const { result } = await resp.json();
-        return result;
+    if (Number(secondArg) === 0) {
+        return "Math Error";
     }
+    const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`)
+    const { result } = await resp.json();
+    return result;
     
 }
 
