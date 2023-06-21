@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.3] 20-06-2023
+
+### Added
+-Se agregaron las funcionalidades de Division, Suma, Multiplicacion y Potencia Cuadrada a la ui.
+-Se agregaron los test que verifican el correcto funcionamiento de las operaciones antes mencionadas.
+-Se agrego un test que verifica que se tire error cuando el resultado de la potencia es mayor a 100.000.
+-Se agrego la funcionalidad del boton C, el cual vacia el display.
+-Se agrego el test que verifica que el display este vacio luego de pulsar el boton C.
+
+### Fixed
+-Se corrigieron errores utilizndo Lint
+
 ## [1.3.2] 08-06-2023
 
 ### Fixed
@@ -58,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Interface CLI para realizar cálculos en forma interactiva
 - Base de la API
 - Funciones core para realizar suma, resta, multiplicación, división y potencia
+
 
 [unreleased]: https://github.com/frlp-utn-ingsoft/recalc/compare/v1.3.2...HEAD
 [1.3.2]: https://github.com/frlp-utn-ingsoft/recalc/releases/tag/v1.3.2
