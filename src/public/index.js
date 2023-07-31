@@ -22,6 +22,9 @@ $buttons.addEventListener('click', async (e) => {
             result = await calculateSub(firstArg, secondArg)
         } else if (operation === "/") {
             result = await calculateDiv(firstArg,secondArg)
+            if (! result) {
+                result = "Math Error";
+            }
             
         } else if (operation === '^2'){
             result = await calculatePow(firstArg)
@@ -70,9 +73,6 @@ async function calculatePow(firstArg) {
 }
 
 async function calculateDiv(firstArg, secondArg) {
-    if (Number(secondArg) === 0) {
-        return "Math Error";
-    }
     const resp = await fetch(`/api/v1/div/${firstArg}/${secondArg}`)
     const { result } = await resp.json();
     return result;

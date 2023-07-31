@@ -227,4 +227,25 @@ test.describe('test', () => {
     expect(historyEntry.secondArg).toEqual(1)
     expect(historyEntry.result).toEqual(25)
   });
+  //No debería de dividir por cero 0
+  test('No debería dividir por 0', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', {name: '5' }).click()
+    await page.getByRole('button', {name: '/' }).click()
+    await page.getByRole('button', {name: '0' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/div/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    //Esperamos un elemento de tipo undefined porque el controller solamente devuelve un message y no un result
+    expect(result).toBe(undefined);
+    //Debido al undefined en el result comprobamos que se haya realizado la función mediante el retorno del display
+    await expect(page.getByTestId('display')).toHaveValue(/Math Error/)
+
+  })
+
 })
