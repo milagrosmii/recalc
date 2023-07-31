@@ -194,6 +194,39 @@ test.describe('test', () => {
     expect(historyEntry.result).toEqual(10)
   });
 
+
+  test('Deberia poder realizar una suma', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '2', exact: true }).click()
+    await page.getByRole('button', { name: '4' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '1' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/add/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    expect(result).toBe(25);
+
+    await expect(page.getByTestId('display')).toHaveValue(/25/)
+
+    const operation = await Operation.findOne({
+      where: {
+        name: "ADD"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+
+    expect(historyEntry.firstArg).toEqual(24)
+    expect(historyEntry.secondArg).toEqual(1)
+    expect(historyEntry.result).toEqual(25)
+  });
   //No debería de dividir por cero 0
   test('No debería dividir por 0', async ({ page }) => {
     await page.goto('./');

@@ -11,11 +11,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    if (b!=0) {
+    if (b!==0) {
         return a / b ;
-    } else {
-        return "No se puede dividir por 0";
     }
+
+    return "No se puede dividir por 0";
 }
 
 function pow(a) {
